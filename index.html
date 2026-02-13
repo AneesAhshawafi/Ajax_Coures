@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>AJAX</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+</head>
+
+<body>
+    <button onclick="getRepos()">Get Repos</button>
+    <script>
+        //make function to get repos from github api and print them in console
+        function getRepos() {
+            //assign the request object to a variable
+            var myRequest = new XMLHttpRequest();
+            //Function is called when Ready State change, check if the request is done and the status is 200, then print the response text in console
+            myRequest.onreadystatechange = function () {
+                /*
+            Meaning of readyState: it is the state of the request,
+                - it can be:
+                - [0] (request not initialized)
+                - [1] (server connection established)
+                - [2] (request received)
+                - [3] (processing request)
+                - [4] (request finished and response is ready)
+            Meaning of status:it is the status code of the response, it can be:
+                - [200] (ok)
+                - [404] (not found)
+                - [500] (internal server error)
+                - [403] (forbidden)
+                - [401] (unauthorized)
+                - [400] (bad request)
+                - [204] (no content)
+                - [301] (moved permanently)
+                - [302] (found)
+                - [304] (not modified)
+                */
+                if (this.readyState === 4 && this.status === 200) {
+                    console.log(this.status);
+                    console.log(this.responseText);
+                }
+            }
+            myRequest.open('GET', 'https://api.github.com/users/AneesAhshawafi/repos', true);
+            // myRequest.open('GET', 'https://www.google.com/', true);
+            myRequest.send();
+        }//getRepos
+
+    </script>
+</body>
+
+</html>
