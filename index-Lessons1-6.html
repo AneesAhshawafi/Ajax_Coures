@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>AJAX Learning - طلبات AJAX</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+</head>
+
+<body>
+    <button onclick="getRepos()">Get Name</button>
+
+    <div id="show"></div>
+<!-- Fundamentals (lessons from 1 to 6) -->
+    <script>
+        // دالة لجلب البيانات باستخدام AJAX وتقنية XMLHttpRequest
+        function getRepos() {
+
+            // 1. إنشاء كائن الطلب (Request Object)
+            var myRequest = new XMLHttpRequest();
+
+            // 2. تعريف الدالة التي ستعمل في كل مرة تتغير فيها حالة الطلب (Ready State)
+            myRequest.onreadystatechange = function () {
+
+                /*
+                شرح حالات readyState (مراحل الطلب):
+                - [0] (لم يتم بدء الطلب)
+                - [1] (تم الاتصال بالسيرفر)
+                - [2] (تم استقبال الطلب من قبل السيرفر)
+                - [3] (جاري معالجة الطلب)
+                - [4] (انتهى الطلب والاستجابة جاهزة)
+
+                شرح أكواد الحالة status (أكواد الاستجابة):
+                - [200] (تم بنجاح - OK)
+                - [404] (الصفحة غير موجودة)
+                - [500] (خطأ داخلي في السيرفر)
+                - [403] (ممنوع الوصول)
+                - [401] (غير مصرح به)
+                - [400] (طلب خاطئ)
+                - [204] (لا يوجد محتوى)
+                - [301] (انتقال دائم)
+                - [302] (تم العثور عليه - انتقال مؤقت)
+                - [304] (لم يتغير)
+                */
+
+                // التأكد من أن الطلب اكتمل (4) وأن النتيجة ناجحة (200)
+                if (this.readyState === 4 && this.status === 200) {
+
+                    // طباعة الرد القادم من السيرفر في القنصل (Console)
+                    console.log(this.responseText);
+
+                    // --- الأسطر المعطلة بالأسفل (اختيارية حسب الحاجة) ---
+                    // console.log(this.status);
+                    // console.log(JSON.parse(this.responseText));
+                    // console.log(myRequest);
+
+                    // تحويل النص القادم إلى كائن JS Object وعرضه في الصفحة
+                    // var myJsObject = JSON.parse(this.responseText),
+                    //     myText = '';
+                    // for(var i = 0 ; i < myJsObject.length; i++){
+                    //     console.log(myJsObject[i].username);
+                    //     myText += myJsObject[i].username + '<br>';
+                    //     console.log(myText);
+                    // }
+                    // document.getElementById('show').innerHTML = myText;
+                }
+            };
+
+            // 3. إعداد الطلب (طريقة الإرسال، الرابط، هل هو متزامن أم لا)
+            /*
+               XMLHttpRequest.open(Method, URL, Async, User, Password)
+               - Async: (true) غير متزامن: يكمل الكود عمله ولا ينتظر البيانات.
+               - Sync: (false) متزامن: يتوقف الكود حتى تنتهي عملية جلب البيانات.
+            */
+
+            // روابط تجريبية معطلة:
+            // myRequest.open('GET', 'https://exchangesmangement.cloud', true);
+            // myRequest.open('GET', 'https://www.google.com/', true);
+            // myRequest.open('GET', 'object.json', true);
+
+            // فتح الطلب وإرسال البيانات لملف auth.php مع بارامتر name
+            // myRequest.open('GET', 'auth.php?name=anees&lastlogin=Today', true);
+            myRequest.open('POST', 'auth.php', true);
+            myRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            // myRequest.setRequestHeader("Content-Type", "application/x-wwww-form-urlencoded");
+
+            // 4. إرسال الطلب فعلياً
+            myRequest.send("name=anees&lastlogin=Today");
+        }
+    </script>
+   
+</body>
+
+</html>
