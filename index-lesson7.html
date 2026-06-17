@@ -1,0 +1,51 @@
+<!--Jquery Lessons -->
+<!-- xhr => [X]ML [H]ttp [R]equest -->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+</head>
+
+<body>
+    <button data-page="demo1.html">Get Demo One</button>
+    <button data-page="demo2.html">Get Demo Two</button>
+    <div id="show">
+
+    </div>
+    <!-- Lesson 7 (jQuery Ajax Load) -->
+    <script src="jquery-3.4.1.min.js"></script>
+    <script>
+        // $(function(){
+        //     // $('#show').load('object.json');
+        //     $('#show').load('demo1.html .content', function(ResponseText, status, XHRObject){
+        //         // console.log("Response Text \n"+ResponseText);
+        //         // console.log("Status code \n"+Status);
+        //         // console.log(XHRObject);
+        //         if(status === "success"){
+        //             console.log("data loaded");
+        //         }
+        //     });
+        // });
+        $(function () {
+            // $('#show').load('object.json');
+            $('button').on("click", function () {
+                $("#show").load($(this).data("page") + " .content", function (ResponseText, status, XHRObject) {
+                    if (status === "success") {
+                        console.log("data loaded");
+                    }
+                });
+                // console.log("Response Text \n"+ResponseText);
+                // console.log("Status code \n"+Status);
+                // console.log(XHRObject);
+
+            });
+        });
+    </script>
+    <!-- <script src="https://gist.github.com/amit1952/3c0fcfdfb47dbcd5da1671cbfcda898b.js"></script> -->
+</body>
+
+</html>

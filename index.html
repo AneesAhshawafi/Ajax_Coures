@@ -1,3 +1,5 @@
+<!--Jquery Lessons -->
+<!-- Lesson 12 (Real Life Example) -->
 <!DOCTYPE html>
 <html>
 
@@ -9,39 +11,66 @@
 </head>
 
 <body>
-    <button data-page="demo1.html">Get Demo One</button>
-    <button data-page="demo2.html">Get Demo One</button>
+    <input type="text" class="my-comment">
+    <button>Get Info</button>
+
     <div id="show">
 
     </div>
-    <!-- Lesson 7 (jQuery Ajax Load) -->
     <script src="jquery-3.4.1.min.js"></script>
     <script>
-        // $(function(){
-        //     // $('#show').load('object.json');
-        //     $('#show').load('demo1.html .content', function(ResponseText, status, XHRObject){
-        //         // console.log("Response Text \n"+ResponseText);
-        //         // console.log("Status code \n"+Status);
-        //         // console.log(XHRObject);
-        //         if(status === "success"){
-        //             console.log("data loaded");
-        //         }
-        //     });
-        // });
         $(function () {
-            // $('#show').load('object.json');
             $('button').on("click", function () {
-                $("#show").load($(this).data("page") + " .content", function (ResponseText, status, XHRObject) {
-                    if (status === "success") {
-                        console.log("data loaded");
-                    }
-                });
-                // console.log("Response Text \n"+ResponseText);
-                // console.log("Status code \n"+Status);
-                // console.log(XHRObject);
+                // $.ajax
+                $.ajax({
 
-            });
-        });
+                    method: "POST",
+                    // contentType: "multipart/form-data", //Default value is "application/x-www-form-urlencoded; charset=UTF-8" contentType is used to specify the type of data that is being sent to the server. In this case, it is being sent as a JSON object.
+                    // // type: 'post'//method: 'post' both are same but method is modren after JQuery 1.9.0
+                    // cache: false, //Default value is(true) cache: false is used to prevent the browser from caching the response of the request
+                    // async: false, //Default value is(true) async: false is used to make the request synchronous, which means that the code will wait for the response before executing the next line of code. This is not recommended as it can cause the browser to freeze if the server takes too long to respond.
+                    // timeout: 5000, //Default value is() timeout: 5000 is used to set a timeout for the request, which means that if the server does not respond within 5 seconds, the request will be aborted and an error will be thrown.
+                    // dataType: 'text', //Default value intel Guess(specify the datatype automatically) it is used to specify the type of data that is expected from the server. In this case, it is expected to be a JSON object.
+                    // username: "Anees", //for authentication if the server requires it, you can provide a username and password for the request. This is not commonly used in modern web applications, as most authentication is done using tokens or cookies.
+                    // password: "12345", //for authentication if the server requires it, you can provide a username and password for the request. This is not commonly used in modern web applications, as most authentication is done using tokens or cookies.
+                    // beforeSend: function (XHRObject) {
+                    //     console.log(`Before Send print`)
+                    // },
+                    url: 'comments.php',//Success
+                    // url: 'auths.php',//error
+                    data: { comment: $(".my-comment").val()
+            },
+                success: function (ResponseText, status, XHRObject) {
+                    console.log("Sucess print")
+                    if (status === "success") {
+                        // document.getElementById("show").innerHTML=ResponseText;
+                        $("#show").html(ResponseText);
+                        console.log("data loaded");
+                        console.log(ResponseText);
+                        console.log(status);
+                        console.log(XHRObject);
+                    } else {
+                        console.log("Error Occured");
+                    }
+                },
+                error: function (XHRObject, status, errorThrown) {
+                    console.log("error print")
+                    console.log("Error Occured");
+                    console.log(XHRObject);//XHrObject contains all the info about the request and response
+                    console.log(status);//status contains the status of the request like success, error, timeout etc
+                    console.log(errorThrown);//errorThrown contains the error message if any error occurs
+                },
+                complete: function (XHRObject, status) {
+                    console.log("complete print")
+                    //function complete is called when the request is completed regardless of the status of the request
+                    //It is executed after the success or error callback function is executed
+                    console.log("Request Completed");
+                    console.log(XHRObject);//XHrObject contains all the info about the request and response
+                    console.log(status);//status contains the status of the request like success, error, timeout etc
+                }
+                })
+            })
+        })
     </script>
     <!-- <script src="https://gist.github.com/amit1952/3c0fcfdfb47dbcd5da1671cbfcda898b.js"></script> -->
 </body>

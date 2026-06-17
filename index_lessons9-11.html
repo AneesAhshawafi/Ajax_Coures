@@ -1,0 +1,75 @@
+<!--Jquery Lessons -->
+<!-- Lesson 9 (jQuery $.ajax) -->
+<!-- xhr => [X]ML [H]ttp [R]equest -->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+</head>
+
+<body>
+    <button>Get Info</button>
+
+    <div id="show">
+
+    </div>
+    <script src="jquery-3.4.1.min.js"></script>
+    <script>
+        $(function () {
+            $('button').on("click", function () {
+                // $.ajax
+                $.ajax({
+                    
+                    contentType: "multipart/form-data", //Default value is "application/x-www-form-urlencoded; charset=UTF-8" contentType is used to specify the type of data that is being sent to the server. In this case, it is being sent as a JSON object.
+                    // type: 'post'//method: 'post' both are same but method is modren after JQuery 1.9.0
+                    method: "POST",
+                    cache: false, //Default value is(true) cache: false is used to prevent the browser from caching the response of the request
+                    async: false, //Default value is(true) async: false is used to make the request synchronous, which means that the code will wait for the response before executing the next line of code. This is not recommended as it can cause the browser to freeze if the server takes too long to respond.
+                    timeout: 5000, //Default value is() timeout: 5000 is used to set a timeout for the request, which means that if the server does not respond within 5 seconds, the request will be aborted and an error will be thrown.
+                    dataType: 'text', //Default value intel Guess(specify the datatype automatically) it is used to specify the type of data that is expected from the server. In this case, it is expected to be a JSON object.
+                    username: "Anees", //for authentication if the server requires it, you can provide a username and password for the request. This is not commonly used in modern web applications, as most authentication is done using tokens or cookies.
+                    password: "12345", //for authentication if the server requires it, you can provide a username and password for the request. This is not commonly used in modern web applications, as most authentication is done using tokens or cookies.
+                    beforeSend: function (XHRObject) {
+                        console.log(`Before Send print`)
+                    },
+                    url: 'auth.php',//Success
+                    // url: 'auths.php',//error
+                    data: { name: "Anees", lastlogin: "Tow days age" },
+                    success: function (ResponseText, status, XHRObject) {
+                        console.log("Sucess print")
+                        if (status === "success") {
+                            console.log("data loaded");
+                            console.log(ResponseText);
+                            console.log(status);
+                            console.log(XHRObject);
+                        } else {
+                            console.log("Error Occured");
+                        }
+                    },
+                    error: function (XHRObject, status, errorThrown) {
+                        console.log("error print")
+                        console.log("Error Occured");
+                        console.log(XHRObject);//XHrObject contains all the info about the request and response
+                        console.log(status);//status contains the status of the request like success, error, timeout etc
+                        console.log(errorThrown);//errorThrown contains the error message if any error occurs
+                    },
+                    complete: function (XHRObject, status) {
+                        console.log("complete print")
+                        //function complete is called when the request is completed regardless of the status of the request
+                        //It is executed after the success or error callback function is executed
+                        console.log("Request Completed");
+                        console.log(XHRObject);//XHrObject contains all the info about the request and response
+                        console.log(status);//status contains the status of the request like success, error, timeout etc
+                    }
+                })
+            })
+        })
+    </script>
+    <!-- <script src="https://gist.github.com/amit1952/3c0fcfdfb47dbcd5da1671cbfcda898b.js"></script> -->
+</body>
+
+</html>
